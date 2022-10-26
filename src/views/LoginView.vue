@@ -1,59 +1,51 @@
 <template>
-  <main class="form-signin w-100 m-auto">
-    <form>
-      <img
-        class="mb-4"
-        src="/docs/5.2/assets/brand/bootstrap-logo.svg"
-        alt=""
-        width="72"
-        height="57"
-      />
-      <h1 class="h3 mb-3 fw-normal">Please sign in</h1>
-
-      <div class="form-floating">
-        <input
-          type="email"
-          class="form-control"
-          id="floatingInput"
-          placeholder="name@example.com"
-          autocomplete="off"
-          style="
-            background-image: url('data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAASCAYAAABSO15qAAAAAXNSR0IArs4c6QAAAPhJREFUOBHlU70KgzAQPlMhEvoQTg6OPoOjT+JWOnRqkUKHgqWP4OQbOPokTk6OTkVULNSLVc62oJmbIdzd95NcuGjX2/3YVI/Ts+t0WLE2ut5xsQ0O+90F6UxFjAI8qNcEGONia08e6MNONYwCS7EQAizLmtGUDEzTBNd1fxsYhjEBnHPQNG3KKTYV34F8ec/zwHEciOMYyrIE3/ehKAqIoggo9inGXKmFXwbyBkmSQJqmUNe15IRhCG3byphitm1/eUzDM4qR0TTNjEixGdAnSi3keS5vSk2UDKqqgizLqB4YzvassiKhGtZ/jDMtLOnHz7TE+yf8BaDZXA509yeBAAAAAElFTkSuQmCC');
-            background-repeat: no-repeat;
-            background-attachment: scroll;
-            background-size: 16px 18px;
-            background-position: 98% 50%;
-          "
-        />
-        <label for="floatingInput">Email address</label>
-      </div>
-      <div class="form-floating">
-        <input
-          type="password"
-          class="form-control"
-          id="floatingPassword"
-          placeholder="Password"
-          autocomplete="off"
-          style="
-            background-image: url('data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAASCAYAAABSO15qAAAAAXNSR0IArs4c6QAAAPhJREFUOBHlU70KgzAQPlMhEvoQTg6OPoOjT+JWOnRqkUKHgqWP4OQbOPokTk6OTkVULNSLVc62oJmbIdzd95NcuGjX2/3YVI/Ts+t0WLE2ut5xsQ0O+90F6UxFjAI8qNcEGONia08e6MNONYwCS7EQAizLmtGUDEzTBNd1fxsYhjEBnHPQNG3KKTYV34F8ec/zwHEciOMYyrIE3/ehKAqIoggo9inGXKmFXwbyBkmSQJqmUNe15IRhCG3byphitm1/eUzDM4qR0TTNjEixGdAnSi3keS5vSk2UDKqqgizLqB4YzvassiKhGtZ/jDMtLOnHz7TE+yf8BaDZXA509yeBAAAAAElFTkSuQmCC');
-            background-repeat: no-repeat;
-            background-attachment: scroll;
-            background-size: 16px 18px;
-            background-position: 98% 50%;
-          "
-        />
-        <label for="floatingPassword">Password</label>
-      </div>
-
-      <div class="checkbox mb-3">
-        <label>
-          <input type="checkbox" value="remember-me" /> Remember me
-        </label>
-      </div>
-      <button class="w-100 btn btn-lg btn-primary" type="submit">
-        Sign in
-      </button>
-      <p class="mt-5 mb-3 text-muted">© 2017–2022</p>
-    </form>
-  </main>
+	<main class="form-signin w-100 m-auto">
+		<form>
+			<h1 class="h3 mb-3 fw-normal">Anmeldung</h1>
+			<div class="form-floating mb-3">
+				<input
+					v-model="data.username"
+					type="text"
+					class="form-control"
+					id="floatingInput"
+					placeholder="Benutzername"
+					autocomplete="off"
+				/>
+				<label for="floatingInput">Benutzername</label>
+			</div>
+			<div class="form-floating mb-3">
+				<input
+					v-model="data.password"
+					type="password"
+					class="form-control"
+					id="floatingPassword"
+					placeholder="Passwort"
+					autocomplete="off"
+				/>
+				<label for="floatingPassword">Passwort</label>
+			</div>
+			<button class="w-100 btn btn-lg btn-primary" type="submit" @click="login">Sign in</button>
+		</form>
+	</main>
 </template>
+
+<script setup lang="ts">
+import { reactive } from 'vue';
+import Parse from 'parse/dist/parse.min.js';
+Parse.initialize('8PzeU2cmYFKLbLnpHzZAfe');
+Parse.serverURL = 'https://test.diabetesferien.de/parse';
+
+const data = reactive({
+	username: '',
+	password: '',
+});
+
+async function login() {
+	try {
+		const user = await Parse.User.logIn(data.username, data.password);
+		debugger;
+	} catch (error) {
+		debugger;
+	}
+}
+</script>
